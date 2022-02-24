@@ -38,25 +38,28 @@
         <div class="col-md-8 offset-md-2">
             
             <!-- conteúdo dinâmico, vem do BD  -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            Avatar 
-                        </div>
-                        <div class="col-md-8">
-                            <h5 class="card-title">Codinome do usuário</h5>
-                            <p class="card-text"> 
-                                Um texto qualquer no calor do momento.
-                            </p>
-                            <p class="text-secondary">
-                                Publicado em 99/99/9999
-                            </p>
-                        </div>
-                    </div>                    
+            @if (count($comentarios) === 0)
+                <p class="text-center">Não há comentários para exibir, ninguém publicou :-(  </p>
+            @else   
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                Avatar 
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="card-title">Codinome do usuário</h5>
+                                <p class="card-text"> 
+                                    Um texto qualquer no calor do momento.
+                                </p>
+                                <p class="text-secondary">
+                                    Publicado em 99/99/9999
+                                </p>
+                            </div>
+                        </div>                    
+                    </div>
                 </div>
-            </div>
-
+            @endif
 
         </div>
     </div>

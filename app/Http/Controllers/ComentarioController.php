@@ -15,8 +15,8 @@ class ComentarioController extends Controller
     public function index()
     {
         $comentarios = Comentario::all();
-        //return view('dizai',['comentarios'=>$comentarios]);
-        var_dump($comentarios);
+        return view('dizai',['comentarios'=>$comentarios]);
+        //var_dump($comentarios);
     }
 
     /**
