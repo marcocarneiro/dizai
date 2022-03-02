@@ -14,7 +14,7 @@ class ComentarioController extends Controller
      */
     public function index()
     {
-        $comentarios = Comentario::all();
+        $comentarios = Comentario::orderBy('created_at', 'desc')->get();
         return view('dizai',['comentarios'=>$comentarios]);
         //var_dump($comentarios);
     }
@@ -37,7 +37,15 @@ class ComentarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comentario = new Comentario;
+
+        $comentario->codinome = $request->codinome;
+        $comentario->espirito  = $request->espirito;
+        $comentario->comentario = $request->comentario;
+
+        $comentario->save();
+        return redirect('/');
+
     }
 
     /**

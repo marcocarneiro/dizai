@@ -19,6 +19,24 @@
         .conteudo{
             margin-top: 120px;
         }
+
+        .botao-flutuante{
+            display:block;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            border: none;
+            font-size: 35px;
+            color: #fff;
+            border-radius: 50%;
+            box-shadow: 5px 5px 5px #aaa;
+        }
+        .avatar {
+            font-size: 80px;
+        }
+
     </style>
 
     <title>DIZ AÍ!!</title>
@@ -40,29 +58,84 @@
             <!-- conteúdo dinâmico, vem do BD  -->
             @if (count($comentarios) === 0)
                 <p class="text-center">Não há comentários para exibir, ninguém publicou :-(  </p>
-            @else   
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                Avatar 
-                            </div>
-                            <div class="col-md-8">
-                                <h5 class="card-title">Codinome do usuário</h5>
-                                <p class="card-text"> 
-                                    Um texto qualquer no calor do momento.
-                                </p>
-                                <p class="text-secondary">
-                                    Publicado em 99/99/9999
-                                </p>
-                            </div>
-                        </div>                    
+            @else
+                @foreach ($comentarios as $comentario)  
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <span class="avatar text-warning"><i class="{{$comentario->espirito}}"></i></span> 
+                                </div>
+                                <div class="col-md-8">
+                                    <h5 class="card-title">{{$comentario->codinome}}</h5>
+                                    <p class="card-text"> 
+                                        {{$comentario->comentario}}
+                                    </p>
+                                    <p class="text-secondary">
+                                        Publicado em {{ Carbon\Carbon::parse($comentario->created_at)->format('d/m/Y H:i:s') }}
+                                    </p>
+                                </div>
+                            </div>                    
+                        </div>
                     </div>
-                </div>
+                @endforeach
             @endif
 
         </div>
     </div>
+
+
+    <button type="button" class="botao-flutuante bg-warning" data-bs-toggle="modal" data-bs-target="#modalFormulario">
+        +
+    </button>
+
+    
+    <div class="modal fade" id="modalFormulario" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFormularioLabel">DIZ AÍ!!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('novocomentario') }}">
+                        @csrf                    
+                        <input class="form-control" type="text" placeholder="Codinome" name="codinome" required>
+                        <br>
+                        <p>Seu estado de espírito</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="espirito" value="far fa-grin-tongue" required>
+                            <label class="form-check-label"><i class="far fa-grin-tongue fa-2x"></i></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="espirito" value="far fa-grin-beam" required>
+                            <label class="form-check-label"><i class="far fa-grin-beam fa-2x"></i></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="espirito" value="far fa-sad-tear" required>
+                            <label class="form-check-label"><i class="far fa-sad-tear fa-2x"></i></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="espirito" value="far fa-surprise" required>
+                            <label class="form-check-label"><i class="far fa-surprise fa-2x"></i></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="espirito" value="far fa-angry" required>
+                            <label class="form-check-label"><i class="far fa-angry fa-2x"></i></label>
+                        </div>
+                        
+                        <br><br>
+                        <label for="comentario" class="form-label">Diz Aí!!</label>
+                        <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                        
+                        <br>
+                        <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

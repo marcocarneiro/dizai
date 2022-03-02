@@ -22,3 +22,5 @@ Route::get('/', [ComentarioController::class, 'index'])->name('/');
 Route::get('/info', function () {
     phpinfo();
 });
+
+Route::post('/novocomentario', [ComentarioController::class, 'store'])->name('novocomentario');
